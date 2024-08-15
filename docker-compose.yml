@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #command: python manage.py run -h 0.0.0.0
+    #command: bash -c "python3 -m flask run -h 0.0.0.0 -p 8000 && python3 -m flask db init"
+    command: >
+      sh -c "python3 -m flask run -h 0.0.0.0 -p 8000"
+    #command: >
+    #  sh -c "python3 manage.py create_db &&
+    #         python3 -m flask run -h 0.0.0.0 -p 8000"
+
+    volumes:
+      - ./:/usr/src/app/
+    #ports:
+    #  - 5001:5000
+    #env_file:
+    #  - ./.env.dev
+    environment:
+      - FLASK_APP=project/__init__.py
+      - FLASK_DEBUG=1
+      #- DB_URL=postgresql://flask_user:fl4sk_123@db:5435/flask_db
+    #depends_on:
+    #  - db
+    network_mode: host
+
+#  db:
+#    container_name: container_db
+#    image: postgres:latest
+#    ports:
+#      - "5435:5435"
+#    environment:
+#      - POSTGRES_PASSWORD=fl4sk_123
+#      - POSTGRES_USER=flask_user
+#      - POSTGRES_DB=flask_db
+#      - PGPORT=5435
+
+#    volumes:
+#      - pgdata:/var/lib/postgresql/data
+
+#volumes:
+#  pgdata:
+  
+#networks:
+#  host:
+#    name: host
+#    external: true
